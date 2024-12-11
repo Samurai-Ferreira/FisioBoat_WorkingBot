@@ -32,6 +32,7 @@ AFRAME.registerComponent('boat-controls', {
     tick: function (time, timeDelta) {
         const deltaSeconds = timeDelta / 1000; // Converte o tempo delta para segundos
         const currentPosition = this.el.getAttribute('position'); // Obtém a posição atual do barco
+        //Anti queda do abismo
         currentPosition.z = ((currentPosition.z<-150) ? 0 : currentPosition.z);
         // Acelera se o barco estiver em movimento
         if (this.isMoving) {
@@ -94,9 +95,10 @@ AFRAME.registerComponent('bot-boat', {
     },
     tick: function () {
         
-        const botCurrentPosition = this.el.getAttribute('position'); // Obtém a posição atual do barco
+        const botCurrentPosition = this.el.getAttribute('position'); // Obtém a posição atual do botBarco
+        //Anti queda do abismo
         botCurrentPosition.z = ((botCurrentPosition.z<-150) ? 0 : botCurrentPosition.z);
-        // Acelera se o barco estiver em movimento
+        //inicia movimentação do bot mediante espaço ou squat
         if (this.isRacing) {
           botCurrentPosition.z -= this.data.botSpeed; 
           this.el.setAttribute('position', botCurrentPosition);

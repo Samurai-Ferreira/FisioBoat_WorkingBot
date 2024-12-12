@@ -7,7 +7,6 @@ AFRAME.registerComponent('boat-controls', {
         maxSpeed: { type: 'number', default: 7 }, // Velocidade máxima permitida
     },
     init: function () {
-        this.velocity = 0; // Velocidade inicial do barco
         this.isMoving = false; // Estado inicial: barco parado
 
         // Inicia o movimento ao pressionar a tecla "espaço"
@@ -73,14 +72,14 @@ AFRAME.registerComponent('follow', {
         );
     }
 });
+// Componente para controlar o botBarco
 AFRAME.registerComponent('bot-boat', {
     schema: {
-        botSpeed: { type: 'number', default: 0.1 }, // Taxa de aceleração
+        botSpeed: { type: 'number', default: 0.1 }, // velocidade botBarco
         
     },
       init: function () {
-        this.velocity = 0; // Velocidade inicial do barco
-        this.isRacing = false; // Estado inicial: barco parado
+        this.isRacing = false; // Estado inicial: sem corrida -> botBarco parado
 
         // Inicia o movimento ao pressionar a tecla "espaço"
         window.addEventListener('keydown', (event) => {
@@ -96,9 +95,9 @@ AFRAME.registerComponent('bot-boat', {
     tick: function () {
         
         const botCurrentPosition = this.el.getAttribute('position'); // Obtém a posição atual do botBarco
-        //Anti queda do abismo
+        // Anti queda do abismo
         botCurrentPosition.z = ((botCurrentPosition.z<-150) ? 0 : botCurrentPosition.z);
-        //inicia movimentação do bot mediante espaço ou squat
+        // inicia movimentação do bot mediante espaço ou squat
         if (this.isRacing) {
           botCurrentPosition.z -= this.data.botSpeed; 
           this.el.setAttribute('position', botCurrentPosition);
